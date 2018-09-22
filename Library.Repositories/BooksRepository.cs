@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Library.Repositories
 {
-    public class BooksRepository
+    public class BooksRepository : IBooksRepository
     {
         public static List<Book> _allBooks = new List<Book>
         {
@@ -38,5 +38,10 @@ namespace Library.Repositories
         {
             return _allBooks;
         }
+    }
+
+    public interface IBooksRepository
+    {
+        List<Book> GetBooks();
     }
 }

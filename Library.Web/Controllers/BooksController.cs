@@ -10,12 +10,16 @@ namespace Library.Web.Controllers
 {
     public class BooksController : Controller
     {
+        private readonly IBooksRepository _booksRepository;
+
+        public BooksController(IBooksRepository booksRepository)
+        {
+            _booksRepository = booksRepository;
+        }
+
         public IActionResult Index()
         {
-            var _booksRepository = new BooksRepository();
-
             List<Book> books = _booksRepository.GetBooks();
-
             return View(books);
         }
     }
