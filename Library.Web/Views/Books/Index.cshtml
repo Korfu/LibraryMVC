@@ -27,12 +27,9 @@
             <td>@book.Id</td>
             <td>@book.ProductionYear</td>
             <td>@book.Genre.Name</td>
-            <td>@Html.ActionLink("Details", "Details", "Books", new { id = book.Id }, null) </td>
+            <td>@Html.ActionLink("Details", "Details", "Books", new { id = book.Id }, new { @class = "btn btn-primary" })</td>
         </tr>
             }
         }
-
     </tbody>
-
-    
 </table>
