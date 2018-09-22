@@ -1,5 +1,4 @@
-﻿@using Library.Models
-@model List<Book>
+﻿@model List<Book>
 
 @{
     ViewData["Title"] = "Books";
@@ -15,6 +14,7 @@
             <th>@Html.DisplayNameFor(x => x.Single().Id)</th>
             <th>@Html.DisplayNameFor(x => x.Single().ProductionYear)</th>
             <th>@Html.DisplayNameFor(x => x.Single().Genre)</th>
+            <th>Details</th>
         </tr>
     </thead>
     <tbody>
@@ -27,9 +27,12 @@
             <td>@book.Id</td>
             <td>@book.ProductionYear</td>
             <td>@book.Genre.Name</td>
+            <td>@Html.ActionLink("Details", "Details", "Books", new { id = book.Id }, null) </td>
         </tr>
             }
         }
 
     </tbody>
+
+    
 </table>

@@ -22,5 +22,12 @@ namespace Library.Web.Controllers
             List<Book> books = _booksRepository.GetBooks();
             return View(books);
         }
+        public IActionResult Details(int id)
+        {
+            var book = _booksRepository.GetBook(id);
+
+            return View(book);
+        }
+
     }
 }

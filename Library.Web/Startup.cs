@@ -31,7 +31,7 @@ namespace Library.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddTransient<IBooksRepository, BooksRepository>();
+            services.AddSingleton<IBooksRepository, BooksRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
