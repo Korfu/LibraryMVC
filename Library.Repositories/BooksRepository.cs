@@ -56,11 +56,22 @@ namespace Library.Repositories
         {
             return _allBooks;
         }
+
+        public int AddBook(Book book)
+        {
+            var maxId = _allBooks.Select(x => x.Id).Max();
+            book.Id = maxId + 1;
+            var genreRepository = new GenreRepository();
+            book.Genre = genreRepository.Get(book.GenreId);
+            _allBooks.Add(book);
+            return book.Id;
+        }
     }
 
     public interface IBooksRepository
     {
         List<Book> GetBooks();
         Book GetBook(int id);
+        int AddBook(Book book);
     }
 }

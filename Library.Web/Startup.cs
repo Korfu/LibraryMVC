@@ -32,6 +32,7 @@ namespace Library.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddSingleton<IBooksRepository, BooksRepository>();
+            services.AddSingleton<IGenreRepository, GenreRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
