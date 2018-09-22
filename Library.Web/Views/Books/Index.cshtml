@@ -1,0 +1,35 @@
+﻿@using Library.Models
+@model List<Book>
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+<h2>Books</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(x => x.Single().Title)</th>
+            <th>@Html.DisplayNameFor(x => x.Single().Author)</th>
+            <th>@Html.DisplayNameFor(x => x.Single().Id)</th>
+            <th>@Html.DisplayNameFor(x => x.Single().ProductionYear)</th>
+            <th>@Html.DisplayNameFor(x => x.Single().Genre)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            foreach (var book in Model)
+            {
+        <tr>
+            <td>@book.Title</td>
+            <td>@book.Author</td>
+            <td>@book.Id</td>
+            <td>@book.ProductionYear</td>
+            <td>@book.Genre.Name</td>
+        </tr>
+            }
+        }
+
+    </tbody>
+</table>

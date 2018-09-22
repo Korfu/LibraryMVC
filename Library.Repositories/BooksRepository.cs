@@ -6,7 +6,7 @@ namespace Library.Repositories
 {
     public class BooksRepository
     {
-        private static List<Book> _allBooks = new List<Book>
+        public static List<Book> _allBooks = new List<Book>
         {
             new Book
             {
