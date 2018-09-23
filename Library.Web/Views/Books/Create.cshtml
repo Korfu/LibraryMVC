@@ -10,34 +10,34 @@
 {
     <div class="form-group row">
         <div class="col-sm-6">
-            @Html.LabelFor(x => x.Author, "Author", new { @class = "form-control" })
+            @Html.LabelFor(x => x.Author, new { @class = "form-control" })
         </div>
         <div class="col-sm-6">
-            @Html.EditorFor(x => x.Author, null, new { @class = "form-control" })
+            @Html.EditorFor(x => x.Author, new { htmlAttributes = new { @class = "form-control" }})
         </div>
     </div>
-    <div class="row">
+    <div class="form-group row">
         <div class="col-sm-6">
-            @Html.LabelFor(x => x.Title, "Title", new { @class = "form-control" })
+            @Html.LabelFor(x => x.Title, new { @class = "form-control" })
         </div>
         <div class="col-sm-6">
-            @Html.EditorFor(x => x.Title, new { @class = "form-control" })
+            @Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
-    <div class="row">
+    <div class="form-group row">
         <div class="col-sm-6">
             @Html.LabelFor(x => x.ProductionYear, "Publish Year", new { @class = "form-control" })
         </div>
         <div class="col-sm-6">
-            @Html.EditorFor(x => x.ProductionYear, new { @class = "form-control" })
+            @Html.EditorFor(x => x.ProductionYear, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
-    <div class="row">
+    <div class="form-group row">
         <div class="col-sm-6">
-            @Html.LabelFor(x => x.Genre, "Genre", new { @class = "form-control" })
+            @Html.LabelFor(x => x.Genre, new { @class = "form-control" })
         </div>
         <div class="col-sm-6">
-            @Html.DropDownListFor(x => x.GenreId, (IEnumerable<SelectListItem>)ViewBag.Genres)
+            @Html.DropDownListFor(x => x.GenreId, (IEnumerable<SelectListItem>)ViewBag.Genres, new { @class = "form-control" })
         </div>
     </div>
     <input type="submit" class="btn"/>
