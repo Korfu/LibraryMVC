@@ -86,6 +86,12 @@ namespace Library.Repositories
             var existingBook = _allBooks.FirstOrDefault(x => x.Id == book.Id);
             _allBooks.Remove(existingBook);
         }
+
+        public IEnumerable<Book> GetBooksByGenreId(int? genreId)
+        {
+            var booksByGenre = _allBooks.Where(x => x.Genre.Id == genreId);
+            return booksByGenre;
+        }
     }
 
     public interface IBooksRepository
@@ -95,5 +101,6 @@ namespace Library.Repositories
         int AddBook(Book book);
         void EditBook(Book book);
         void DeleteBook(Book book);
+        IEnumerable<Book> GetBooksByGenreId(int? genreId);
     }
 }

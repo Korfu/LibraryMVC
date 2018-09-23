@@ -23,8 +23,10 @@ namespace Library.Web.Controllers
         public IActionResult Index()
         {
             List<Book> books = _booksRepository.GetBooks();
+            ViewBag.Genres = GetGenres();
             return View(books);
         }
+
         public IActionResult Details(int id)
         {
             var book = _booksRepository.GetBook(id);
@@ -85,6 +87,20 @@ namespace Library.Web.Controllers
         {
             _booksRepository.DeleteBook(book);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult BooksList(int? genreId)
+        {
+            if (genreId.HasValue)
+            {
+                var model = _booksRepository.GetBooksByGenreId(genreId).ToList();
+                return PartialView("_BooksList", model);
+            }
+            else
+            {
+                var model = _booksRepository.GetBooks();
+                return PartialView("_BooksList", model);
+            }
         }
 
         private dynamic GetGenres()
