@@ -7,6 +7,13 @@ namespace Library.Repositories
 {
     public class BooksRepository : IBooksRepository
     {
+        private readonly IGenreRepository _genreRepository;
+
+        public BooksRepository(IGenreRepository genreRepository)
+        {
+            _genreRepository = genreRepository;
+        }
+
         public static List<Book> _allBooks = new List<Book>
         {
             new Book
@@ -61,8 +68,7 @@ namespace Library.Repositories
         {
             var maxId = _allBooks.Select(x => x.Id).Max();
             book.Id = maxId + 1;
-            var genreRepository = new GenreRepository();
-            book.Genre = genreRepository.Get(book.GenreId);
+            book.Genre = _genreRepository.Get(book.GenreId);
             _allBooks.Add(book);
             return book.Id;
         }
@@ -71,8 +77,7 @@ namespace Library.Repositories
         {
             var existingBook = _allBooks.FirstOrDefault(x => x.Id == book.Id);
             _allBooks.Remove(existingBook);
-            var genreRepository = new GenreRepository();
-            book.Genre = genreRepository.Get(book.GenreId);
+            book.Genre = _genreRepository.Get(book.GenreId);
             _allBooks.Add(book);
         }
 
