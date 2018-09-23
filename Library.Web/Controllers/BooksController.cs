@@ -28,13 +28,12 @@ namespace Library.Web.Controllers
         public IActionResult Details(int id)
         {
             var book = _booksRepository.GetBook(id);
-
             return View(book);
         }
 
         public IActionResult Create()
         {
-            ViewBag.Genres = ViewBag.Genres = GetGenres();
+            ViewBag.Genres = GetGenres();
             return View();
         }
 
@@ -50,20 +49,12 @@ namespace Library.Web.Controllers
                 ViewBag.Genres = ViewBag.Genres = GetGenres();
                 return View(book);
             }
-
-
         }
 
         public IActionResult Edit(int id)
         {
-            ViewBag.Genres = _genreRepository.GetAll().Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            });
-
+            ViewBag.Genres = GetGenres();
             var currentBook = _booksRepository.GetBook(id);
-
             return View(currentBook);
         }
 
@@ -84,8 +75,7 @@ namespace Library.Web.Controllers
 
         public IActionResult Delete(int id)
         {
-            ViewBag.Genres = ViewBag.Genres = GetGenres();
-
+            ViewBag.Genres = GetGenres();
             var currentBook = _booksRepository.GetBook(id);
             return View(currentBook);
         }
