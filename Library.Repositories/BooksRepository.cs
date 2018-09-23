@@ -1,7 +1,8 @@
-﻿using Library.Models;
+﻿using Library.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.Repositories
 {
@@ -51,17 +52,34 @@ namespace Library.Repositories
                     Id =3,
                     Name ="Adventure"
                 }
+            },new Book
+            {
+                Id=4,
+                Title="Ogniem i Mieczem",
+                Author="Adam Mickiewicz",
+                ProductionYear = 1875,
+                Genre = new Genre
+                {
+                    Id = 2,
+                    Name = "Fantasy"
+                }
             }
         };
 
         public Book GetBook(int id)
         {
-            return _allBooks.FirstOrDefault(x => x.Id == id);
+            using (var context = new LibraryContext())
+            {
+                return context.Book.Where(x => x.Id == id).Include(x=>x.Genre).Single();
+            }
         }
 
         public List<Book> GetBooks()
         {
-            return _allBooks.OrderBy( x =>x.Id).ToList();
+            using (var context = new LibraryContext())
+            {
+                return context.Book.Include(x => x.Genre).ToList();
+            }
         }
 
         public int AddBook(Book book)
@@ -86,6 +104,12 @@ namespace Library.Repositories
             var existingBook = _allBooks.FirstOrDefault(x => x.Id == book.Id);
             _allBooks.Remove(existingBook);
         }
+
+        public IEnumerable<Book> GetBooksByGenreId(int? genreId)
+        {
+            var booksByGenre = _allBooks.Where(x => x.Genre.Id == genreId);
+            return booksByGenre;
+        }
     }
 
     public interface IBooksRepository
@@ -95,5 +119,6 @@ namespace Library.Repositories
         int AddBook(Book book);
         void EditBook(Book book);
         void DeleteBook(Book book);
+        IEnumerable<Book> GetBooksByGenreId(int? genreId);
     }
 }

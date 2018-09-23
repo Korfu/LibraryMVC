@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Library.Models;
+using Library.Database;
 using Library.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,18 +23,19 @@ namespace Library.Web.Controllers
         public IActionResult Index()
         {
             List<Book> books = _booksRepository.GetBooks();
+            ViewBag.Genres = GetGenres();
             return View(books);
         }
+
         public IActionResult Details(int id)
         {
             var book = _booksRepository.GetBook(id);
-
             return View(book);
         }
 
         public IActionResult Create()
         {
-            ViewBag.Genres = ViewBag.Genres = GetGenres();
+            ViewBag.Genres = GetGenres();
             return View();
         }
 
@@ -50,20 +51,12 @@ namespace Library.Web.Controllers
                 ViewBag.Genres = ViewBag.Genres = GetGenres();
                 return View(book);
             }
-
-
         }
 
         public IActionResult Edit(int id)
         {
-            ViewBag.Genres = _genreRepository.GetAll().Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            });
-
+            ViewBag.Genres = GetGenres();
             var currentBook = _booksRepository.GetBook(id);
-
             return View(currentBook);
         }
 
@@ -84,8 +77,7 @@ namespace Library.Web.Controllers
 
         public IActionResult Delete(int id)
         {
-            ViewBag.Genres = ViewBag.Genres = GetGenres();
-
+            ViewBag.Genres = GetGenres();
             var currentBook = _booksRepository.GetBook(id);
             return View(currentBook);
         }
@@ -95,6 +87,20 @@ namespace Library.Web.Controllers
         {
             _booksRepository.DeleteBook(book);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult BooksList(int? genreId)
+        {
+            if (genreId.HasValue)
+            {
+                var model = _booksRepository.GetBooksByGenreId(genreId).ToList();
+                return PartialView("_BooksList", model);
+            }
+            else
+            {
+                var model = _booksRepository.GetBooks();
+                return PartialView("_BooksList", model);
+            }
         }
 
         private dynamic GetGenres()

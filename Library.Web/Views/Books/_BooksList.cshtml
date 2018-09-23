@@ -1,0 +1,33 @@
+﻿@model List<Book>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(x => x.First().Title)</th>
+            <th>@Html.DisplayNameFor(x => x.First().Author)</th>
+            <th>@Html.DisplayNameFor(x => x.First().Id)</th>
+            <th>@Html.DisplayNameFor(x => x.First().ProductionYear)</th>
+            <th>@Html.DisplayNameFor(x => x.First().Genre)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.Id</td>
+                    <td>@book.ProductionYear</td>
+                    <td>@book.Genre.Name</td>
+                    <td>@Html.ActionLink("Details", "Details", "Books", new { id = book.Id }, new { @class = "btn btn-primary" })</td>
+                    <td>@Html.ActionLink("Edit", "Edit", "Books", new { id = book.Id }, new { @class = "btn btn-warning" })</td>
+                    <td>@Html.ActionLink("Delete", "Delete", "Books", new { id = book.Id }, new { @class = "btn btn-danger" })</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@*<h1>List of Books</h1>
+    @{ Html.RenderPartial("BooksList");};*@
