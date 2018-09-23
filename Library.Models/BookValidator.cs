@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library.Models
+namespace Library.Database
 {
     public class BookValidator : AbstractValidator<Book>
     {

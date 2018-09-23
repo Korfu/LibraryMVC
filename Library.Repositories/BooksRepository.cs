@@ -1,7 +1,8 @@
-﻿using Library.Models;
+﻿using Library.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.Repositories
 {
@@ -67,12 +68,18 @@ namespace Library.Repositories
 
         public Book GetBook(int id)
         {
-            return _allBooks.FirstOrDefault(x => x.Id == id);
+            using (var context = new LibraryContext())
+            {
+                return context.Book.Where(x => x.Id == id).Include(x=>x.Genre).Single();
+            }
         }
 
         public List<Book> GetBooks()
         {
-            return _allBooks.OrderBy( x =>x.Id).ToList();
+            using (var context = new LibraryContext())
+            {
+                return context.Book.Include(x => x.Genre).ToList();
+            }
         }
 
         public int AddBook(Book book)
