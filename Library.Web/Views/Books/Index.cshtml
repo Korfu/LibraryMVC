@@ -7,9 +7,11 @@
 <h2>Books</h2><p class="col-lg-1">Sort by:</p>
 <p class="col-lg-3">@Html.DropDownListFor(x => x.FirstOrDefault().GenreId, (IEnumerable<SelectListItem>)ViewBag.Genres, new { @class = "form-control" })</p>
 
-<div id="booksListContainer"></div>
+
+
+<div id="booksListContainer">@{ Html.RenderPartial("_BooksList", Model);}</div>
 @section Scripts{
-<script>
+    <script>
     $(function () {
         debugger;
     var dropdownElement = $("#GenreId");
@@ -29,5 +31,5 @@ success: function(data){
     })
 
     })
-</script>
+    </script>
 }

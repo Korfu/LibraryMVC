@@ -51,6 +51,17 @@ namespace Library.Repositories
                     Id =3,
                     Name ="Adventure"
                 }
+            },new Book
+            {
+                Id=4,
+                Title="Ogniem i Mieczem",
+                Author="Adam Mickiewicz",
+                ProductionYear = 1875,
+                Genre = new Genre
+                {
+                    Id = 2,
+                    Name = "Fantasy"
+                }
             }
         };
 

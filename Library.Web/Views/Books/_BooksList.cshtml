@@ -1,8 +1,4 @@
 ﻿@model List<Book>
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@if (Model.Any()) { 
 <table class="table">
     <thead>
         <tr>
@@ -32,12 +28,6 @@
         }
     </tbody>
 </table>
-            }
-            else
-            {
-                @:Jakis text
-
-            }
 
 @*<h1>List of Books</h1>
     @{ Html.RenderPartial("BooksList");};*@
