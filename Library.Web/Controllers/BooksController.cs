@@ -34,20 +34,24 @@ namespace Library.Web.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Genres = _genreRepository.GetAll().Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            });
+            ViewBag.Genres = ViewBag.Genres = GetGenres();
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(Book book)
         {
-            var bookIdToBeSabed =  _booksRepository.AddBook(book);
+            if (ModelState.IsValid)
+            {
+                var bookIdToBeSabed = _booksRepository.AddBook(book);
+                return RedirectToAction("Details", new { id = bookIdToBeSabed });
+            } else
+            {
+                ViewBag.Genres = ViewBag.Genres = GetGenres();
+                return View(book);
+            }
 
-            return RedirectToAction("Details", new { id = bookIdToBeSabed });
+
         }
 
         public IActionResult Edit(int id)
@@ -66,21 +70,23 @@ namespace Library.Web.Controllers
         [HttpPost]
         public IActionResult Edit(Book book)
         {
-            _booksRepository.EditBook(book);
-
-            return RedirectToAction("Details", new { id = book.Id });
+            if (ModelState.IsValid)
+            {
+                _booksRepository.EditBook(book);
+                return RedirectToAction("Details", new { id = book.Id });
+            }
+            else
+            {
+                ViewBag.Genres = GetGenres();
+                return View(book);
+            }
         }
 
         public IActionResult Delete(int id)
         {
-            ViewBag.Genres = _genreRepository.GetAll().Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            });
+            ViewBag.Genres = ViewBag.Genres = GetGenres();
 
             var currentBook = _booksRepository.GetBook(id);
-
             return View(currentBook);
         }
 
@@ -88,8 +94,16 @@ namespace Library.Web.Controllers
         public IActionResult Delete(Book book)
         {
             _booksRepository.DeleteBook(book);
-
             return RedirectToAction("Index");
+        }
+
+        private dynamic GetGenres()
+        {
+            return _genreRepository.GetAll().Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            });
         }
 
     }
