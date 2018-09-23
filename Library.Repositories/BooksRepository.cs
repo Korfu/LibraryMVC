@@ -54,7 +54,7 @@ namespace Library.Repositories
 
         public List<Book> GetBooks()
         {
-            return _allBooks;
+            return _allBooks.OrderBy( x =>x.Id).ToList();
         }
 
         public int AddBook(Book book)
@@ -66,6 +66,21 @@ namespace Library.Repositories
             _allBooks.Add(book);
             return book.Id;
         }
+
+        public void EditBook(Book book)
+        {
+            var existingBook = _allBooks.FirstOrDefault(x => x.Id == book.Id);
+            _allBooks.Remove(existingBook);
+            var genreRepository = new GenreRepository();
+            book.Genre = genreRepository.Get(book.GenreId);
+            _allBooks.Add(book);
+        }
+
+        public void DeleteBook(Book book)
+        {
+            var existingBook = _allBooks.FirstOrDefault(x => x.Id == book.Id);
+            _allBooks.Remove(existingBook);
+        }
     }
 
     public interface IBooksRepository
@@ -73,5 +88,7 @@ namespace Library.Repositories
         List<Book> GetBooks();
         Book GetBook(int id);
         int AddBook(Book book);
+        void EditBook(Book book);
+        void DeleteBook(Book book);
     }
 }

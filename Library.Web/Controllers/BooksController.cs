@@ -50,5 +50,47 @@ namespace Library.Web.Controllers
             return RedirectToAction("Details", new { id = bookIdToBeSabed });
         }
 
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Genres = _genreRepository.GetAll().Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            });
+
+            var currentBook = _booksRepository.GetBook(id);
+
+            return View(currentBook);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Book book)
+        {
+            _booksRepository.EditBook(book);
+
+            return RedirectToAction("Details", new { id = book.Id });
+        }
+
+        public IActionResult Delete(int id)
+        {
+            ViewBag.Genres = _genreRepository.GetAll().Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            });
+
+            var currentBook = _booksRepository.GetBook(id);
+
+            return View(currentBook);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Book book)
+        {
+            _booksRepository.DeleteBook(book);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

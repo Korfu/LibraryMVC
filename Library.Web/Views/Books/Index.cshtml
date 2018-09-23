@@ -14,7 +14,7 @@
             <th>@Html.DisplayNameFor(x => x.Single().Id)</th>
             <th>@Html.DisplayNameFor(x => x.Single().ProductionYear)</th>
             <th>@Html.DisplayNameFor(x => x.Single().Genre)</th>
-            <th>Details</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +28,8 @@
             <td>@book.ProductionYear</td>
             <td>@book.Genre.Name</td>
             <td>@Html.ActionLink("Details", "Details", "Books", new { id = book.Id }, new { @class = "btn btn-primary" })</td>
+            <td>@Html.ActionLink("Edit", "Edit", "Books", new { id = book.Id }, new { @class = "btn btn-warning" })</td>
+            <td>@Html.ActionLink("Delete", "Delete", "Books", new { id = book.Id }, new { @class = "btn btn-danger" })</td>
         </tr>
             }
         }
