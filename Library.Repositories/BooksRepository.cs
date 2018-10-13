@@ -41,7 +41,7 @@ namespace Library.Repositories
                     Name ="Political fiction"
                 }
             },
-             new Book
+            new Book
             {
                 Id=3,
                 Title="Potop",
@@ -52,7 +52,8 @@ namespace Library.Repositories
                     Id =3,
                     Name ="Adventure"
                 }
-            },new Book
+            },
+            new Book
             {
                 Id=4,
                 Title="Ogniem i Mieczem",
@@ -70,11 +71,11 @@ namespace Library.Repositories
         {
             using (var context = new LibraryContext())
             {
-                return context.Book.Where(x => x.Id == id).Include(x=>x.Genre).Single();
+                return context.Book.Find(id);
             }
         }
 
-        public List<Book> GetBooks()
+        public IEnumerable<Book> GetBooks()
         {
             using (var context = new LibraryContext())
             {
@@ -114,7 +115,7 @@ namespace Library.Repositories
 
     public interface IBooksRepository
     {
-        List<Book> GetBooks();
+        IEnumerable<Book> GetBooks();
         Book GetBook(int id);
         int AddBook(Book book);
         void EditBook(Book book);

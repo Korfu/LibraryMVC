@@ -22,7 +22,7 @@ namespace Library.Web.Controllers
 
         public IActionResult Index()
         {
-            List<Book> books = _booksRepository.GetBooks();
+            var books = _booksRepository.GetBooks();
             ViewBag.Genres = GetGenres();
             return View(books);
         }
