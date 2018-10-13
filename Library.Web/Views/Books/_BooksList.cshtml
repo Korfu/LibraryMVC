@@ -14,16 +14,16 @@
         @{
             foreach (var book in Model)
             {
-                <tr>
-                    <td>@book.Title</td>
-                    <td>@book.Author</td>
-                    <td>@book.Id</td>
-                    <td>@book.ProductionYear</td>
-                    <td>@book.Genre.Name</td>
-                    <td>@Html.ActionLink("Details", "Details", "Books", new { id = book.Id }, new { @class = "btn btn-primary" })</td>
-                    <td>@Html.ActionLink("Edit", "Edit", "Books", new { id = book.Id }, new { @class = "btn btn-warning" })</td>
-                    <td>@Html.ActionLink("Delete", "Delete", "Books", new { id = book.Id }, new { @class = "btn btn-danger" })</td>
-                </tr>
+        <tr>
+            <td>@book.Id</td>
+            <td>@book.Title</td>
+            <td>@book.Author</td>
+            <td>@book.ProductionYear</td>
+            <td>@book.Genre.Name</td>
+            <td>@Html.ActionLink("Details", "Details", "Books", new { id = book.Id }, new { @class = "btn btn-primary" })</td>
+            <td>@Html.ActionLink("Edit", "Edit", "Books", new { id = book.Id }, new { @class = "btn btn-warning" })</td>
+            <td>@Html.ActionLink("Delete", "Delete", "Books", new { id = book.Id }, new { @class = "btn btn-danger" })</td>
+        </tr>
             }
         }
     </tbody>

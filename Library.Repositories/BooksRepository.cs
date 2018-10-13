@@ -71,7 +71,8 @@ namespace Library.Repositories
         {
             using (var context = new LibraryContext())
             {
-                return context.Book.Find(id);
+                //dodanie Include() zwraca nam cały obiekt a nie tylko klucz główny, potrzebujemy tego, aby dobrać się do nazwy genre, bo ona była "głębiej w modelu"
+                return context.Book.Include(x => x.Genre).Single(x =>x.Id == id);
             }
         }
 
@@ -83,27 +84,35 @@ namespace Library.Repositories
             }
         }
 
+        // w dodawaniu nie trzeba dodawać Include, bo on i tak pracuje na całym obiekcie, a nie na jego kluczu
         public int AddBook(Book book)
         {
-            var maxId = _allBooks.Select(x => x.Id).Max();
-            book.Id = maxId + 1;
-            book.Genre = _genreRepository.Get(book.GenreId);
-            _allBooks.Add(book);
-            return book.Id;
+            using (var context = new LibraryContext())
+            {
+                context.Book.Add(book);
+                context.SaveChanges();
+                return book.Id;
+            }
         }
 
         public void EditBook(Book book)
         {
-            var existingBook = _allBooks.FirstOrDefault(x => x.Id == book.Id);
-            _allBooks.Remove(existingBook);
-            book.Genre = _genreRepository.Get(book.GenreId);
-            _allBooks.Add(book);
+            using (var context = new LibraryContext())
+            {
+                var originalBook = context.Book.Find(book.Id);
+                context.Entry(originalBook).CurrentValues.SetValues(book);
+                context.SaveChanges();
+            }
         }
 
         public void DeleteBook(Book book)
         {
-            var existingBook = _allBooks.FirstOrDefault(x => x.Id == book.Id);
-            _allBooks.Remove(existingBook);
+            using (var context = new LibraryContext())
+            {
+                var originalBook = context.Book.Find(book.Id);
+                context.Book.Remove(originalBook);
+                context.SaveChanges();
+            }
         }
 
         public IEnumerable<Book> GetBooksByGenreId(int? genreId)

@@ -10,6 +10,7 @@ namespace Library.Database
         public string Author { get; set; }
         public int ProductionYear { get; set; }
         public int GenreId { get; set; }
+
         public Genre Genre { get; set; }
     }
 }
