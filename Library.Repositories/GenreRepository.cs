@@ -36,8 +36,6 @@ namespace Library.Repositories
         {
             return _allGenres.First(x => x.Id == id);
         }
-
-
     }
 
     public interface IGenreRepository
