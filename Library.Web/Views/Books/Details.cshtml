@@ -17,6 +17,11 @@
         <td>@Html.DisplayNameFor(x => x.ProductionYear)</td>
         <td>@Model.ProductionYear</td>
     </tr>
+    <tr>
+        <td>@Html.HiddenFor(x=>x.Id)</td>
+    </tr>
 </table>
-<div class="btn" >@Html.ActionLink("Back", "Index", "Books",null, new { @class = "btn btn-primary" })</div>
+<div class="btn">@Html.ActionLink("Back", "Index", "Books", null, new { @class = "btn btn-primary" })</div>
+<div class="btn">@Html.ActionLink("Edit", "Edit", "Books", new { id = Model.Id }, new { @class = "btn btn-warning" })</div>
+
 
