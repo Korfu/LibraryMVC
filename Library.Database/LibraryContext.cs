@@ -16,6 +16,7 @@ namespace Library.Database
         }
 
         public virtual DbSet<Book> Book { get; set; }
+        public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<Genre> Genre { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -46,6 +47,13 @@ namespace Library.Database
                     .HasForeignKey(d => d.GenreId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_genre");
+            });
+
+            modelBuilder.Entity<Customer>(entity =>
+            {
+                entity.Property(e => e.Name).HasMaxLength(50);
+
+                entity.Property(e => e.Surname).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Genre>(entity =>

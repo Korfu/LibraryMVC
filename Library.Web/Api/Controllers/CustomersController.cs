@@ -4,52 +4,93 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.Repositories;
+
 
 namespace Library.Web.Api.Controllers
 {
     [Route("api/[controller]")] //[bazwoyAdresAplikaci}/api/customers
     public class CustomersController : Controller
     {
+        private readonly ICustomersRepository _customerRepository;
+
+        public CustomersController(ICustomersRepository customerRepostiory)
+        {
+            _customerRepository = customerRepostiory;
+        }
+
+
+        /// <summary>
+        /// Returns all customers
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("")] //[bazwoyAdresAplikaci}/api/customers GET
-        public IEnumerable<Customer> Get()
+        public IActionResult Get()
         {
-            return new List<Customer>
+            var customers = _customerRepository.GetAll();
+            if (customers != null)
             {
-                new Customer { Id = 1, Name = "Konrad", Surname = "Korf", DateOfBirth = DateTime.Now },
-                new Customer { Id = 2, Name = "Tom", Surname = "Cruise", DateOfBirth = DateTime.Now.AddYears(-1) }
-            };
+                return Ok(customers);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet]
         [Route("{id}")] //[bazwoyAdresAplikaci}/api/customers/1 GET
-        public IActionResult Get([FromRoute]int id)
+        public IActionResult GetAll([FromRoute]int id)
         {
-            if (id == 1)
-                return Ok(new Customer { Id = 3, Name = "Konrad", Surname = "Korf", DateOfBirth = DateTime.Now });
+            var customer = _customerRepository.Get(id);
+            if (customer != null)
+            {
+                return Ok(customer);
+            }
             else
+            {
                 return NotFound();
+            }
         }
 
         [HttpPost]
         [Route("")] //[bazwoyAdresAplikaci}/api/customers 
         public IActionResult Create([FromBody]Customer customer)
         {
-         return Created("",new Random().Next());
+            if (ModelState.IsValid)
+            {
+                var bookIdToBeSabed = _customerRepository.Add(customer);
+                return Ok(customer);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut]
         [Route("")] //[bazwoyAdresAplikaci}/api/customers
-        public int Update([FromBody]Customer customer)
+        public IActionResult Update([FromBody]Customer customer)
         {
-            return new Random().Next();
+            if (ModelState.IsValid)
+            {
+                _customerRepository.Edit(customer);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete]
         [Route("{id}")] //[bazwoyAdresAplikaci}/api/customers
-        public int Delete([FromRoute]int id)
+        public IActionResult Delete([FromRoute]int id)
         {
-            return new Random().Next();
+            var customer = _customerRepository.Get(id);
+            _customerRepository.Delete(customer);
+            return Ok();
         }
 
 

@@ -72,7 +72,7 @@ namespace Library.Repositories
             using (var context = new LibraryContext())
             {
                 //dodanie Include() zwraca nam cały obiekt a nie tylko klucz główny, potrzebujemy tego, aby dobrać się do nazwy genre, bo ona była "głębiej w modelu"
-                return context.Book.Include(x => x.Genre).Single(x =>x.Id == id);
+                return context.Book.Include(x => x.Genre).SingleOrDefault(x =>x.Id == id);
             }
         }
 
